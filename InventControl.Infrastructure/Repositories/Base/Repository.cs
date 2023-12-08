@@ -8,23 +8,31 @@ using System.Linq.Expressions;
 
 namespace InventControl.Infrastructure.Repositories.Base;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
 {
     protected readonly InventControlContext _context;
     public Repository(InventControlContext context)
     {
         _context = context;
     }
-    public Task<TEntity> Get(long id)
+    public async Task<TEntity> Get(long id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _context.Set<TEntity>().AsNoTracking().Where(p => p.Id == id).SingleOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
     }
     public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null,
         Expression<Func<TEntity, object>> orderBy = null)
     {
         try
         {
-            return await _context.Set<TEntity>().Where(filter).OrderBy(orderBy).ToListAsync();
+            return await _context.Set<TEntity>().AsNoTracking().Where(filter).OrderBy(orderBy).ToListAsync();
         }
         catch (Exception ex)
         {
