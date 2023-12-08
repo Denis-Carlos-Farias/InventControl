@@ -1,4 +1,4 @@
-﻿namespace InventControl.Domain.DTO;
+﻿namespace InventControl.Application.DTO;
 
 public class CategoryDto
 {

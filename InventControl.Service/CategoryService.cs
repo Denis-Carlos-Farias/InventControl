@@ -1,5 +1,4 @@
-﻿using InventControl.Domain.DTO;
-using InventControl.Domain.Entities;
+﻿using InventControl.Domain.Entities;
 using InventControl.Domain.Interfaces.Infrastructure;
 using InventControl.Domain.Interfaces.Service;
 
@@ -12,13 +11,8 @@ public class CategoryService : ICategoryService
     {
         _repository = repository;
     }
-    public async Task Insert(CategoryDto category)
+    public async Task Insert(Category category, CancellationToken cancellationToken)
     {
-        var obj = new Category
-        {
-            Avalible = category.Avalible,
-            CategoryName = category.CategoryName
-        };
-        await _repository.Insert(obj).ConfigureAwait(false);
+        await _repository.Insert(category, cancellationToken).ConfigureAwait(false);
     }
 }

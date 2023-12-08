@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IoC\Service\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\InventControl.Application\InventControl.Application.csproj" />
     <ProjectReference Include="..\InventControl.Infrastructure\InventControl.Infrastructure.csproj" />
     <ProjectReference Include="..\InventControl.Service\InventControl.Service.csproj" />
   </ItemGroup>

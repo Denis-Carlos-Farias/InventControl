@@ -2,7 +2,7 @@
 using InventControl.Service;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InventControl.CorssCutting.IoC.Context.Service;
+namespace InventControl.CorssCutting.IoC.Service;
 
 public static class ServiceBootstrap
 {

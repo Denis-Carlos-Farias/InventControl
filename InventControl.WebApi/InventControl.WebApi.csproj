@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InventControl.Application\InventControl.Application.csproj" />
     <ProjectReference Include="..\InventControl.CorssCutting\InventControl.CorssCutting.csproj" />
   </ItemGroup>
 
