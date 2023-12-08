@@ -35,7 +35,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         try
         {
-            _context.Set<TEntity>().Add(entity);
+            await _context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
         catch (Exception ex)
