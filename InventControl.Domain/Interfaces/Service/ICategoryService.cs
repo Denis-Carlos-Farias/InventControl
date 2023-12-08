@@ -4,6 +4,6 @@ namespace InventControl.Domain.Interfaces.Service
 {
     public interface ICategoryService
     {
-        Task Insert(CategoryDto category);
+        Task Insert(CategoryDto category, CancellationToken token);
     }
 }

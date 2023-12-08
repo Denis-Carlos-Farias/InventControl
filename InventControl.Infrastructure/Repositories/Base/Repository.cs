@@ -15,11 +15,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
     {
         _context = context;
     }
-    public async Task<TEntity> Get(long id)
+    public async Task<TEntity> Get(long id, CancellationToken cancellationToken)
     {
         try
         {
-            return await _context.Set<TEntity>().AsNoTracking().Where(p => p.Id == id).SingleOrDefaultAsync();
+            return await _context.Set<TEntity>().AsNoTracking().Where(p => p.Id == id).SingleOrDefaultAsync(cancellationToken);
         }
         catch (Exception ex)
         {
@@ -27,36 +27,36 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
         }
 
     }
-    public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null,
+    public async Task<IEnumerable<TEntity>> Get(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> filter = null,
         Expression<Func<TEntity, object>> orderBy = null)
     {
         try
         {
-            return await _context.Set<TEntity>().AsNoTracking().Where(filter).OrderBy(orderBy).ToListAsync();
+            return await _context.Set<TEntity>().AsNoTracking().Where(filter).OrderBy(orderBy).ToListAsync(cancellationToken);
         }
         catch (Exception ex)
         {
             throw ex;
         }
     }
-    public async Task Insert(TEntity entity)
+    public async Task Insert(TEntity entity, CancellationToken cancellationToken)
     {
         try
         {
             await _context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
-            await _context.SaveChangesAsync().ConfigureAwait(false);
+            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             throw ex;
         }
     }
-    public async Task Update(TEntity entity)
+    public async Task Update(TEntity entity, CancellationToken cancellationToken)
     {
         try
         {
             _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {
@@ -64,12 +64,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
         }
 
     }
-    public async Task Delete(long id)
+    public async Task Delete(long id, CancellationToken cancellationToken)
     {
         try
         {
             _context.Remove(id);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {

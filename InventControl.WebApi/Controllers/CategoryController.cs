@@ -16,9 +16,9 @@ namespace InventControl.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task Insert(CategoryDto dto)
+        public async Task Insert(CategoryDto dto, CancellationToken cancellationToken)
         {
-            await _categoryService.Insert(dto).ConfigureAwait(false);
+            await _categoryService.Insert(dto, cancellationToken).ConfigureAwait(false);
         }
     }
 }

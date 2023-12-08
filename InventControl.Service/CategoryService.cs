@@ -12,13 +12,13 @@ public class CategoryService : ICategoryService
     {
         _repository = repository;
     }
-    public async Task Insert(CategoryDto category)
+    public async Task Insert(CategoryDto category, CancellationToken cancellationToken)
     {
         var obj = new Category
         {
             Avalible = category.Avalible,
             CategoryName = category.CategoryName
         };
-        await _repository.Insert(obj).ConfigureAwait(false);
+        await _repository.Insert(obj, cancellationToken).ConfigureAwait(false);
     }
 }
