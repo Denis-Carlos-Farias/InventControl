@@ -1,4 +1,4 @@
-using InventControl.CorssCutting.IoC.Context.Repository;
+using InventControl.CorssCutting.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.ChildServiceRegister(configuration);
+builder.Services.ServicesRegister(configuration);
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

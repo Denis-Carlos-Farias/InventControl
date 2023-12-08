@@ -9,7 +9,7 @@ namespace InventControl.CorssCutting.IoC.Context.Repository;
 
 public static class RepositoryBootstrap
 {
-    public static void ChildServiceRegister(this IServiceCollection services, IConfiguration configuration)
+    public static void RepositoryRegister(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         //Cria conexão com a base de dados..
@@ -22,5 +22,6 @@ public static class RepositoryBootstrap
                 ));
 
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
     }
 }

@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using InventControl.CorssCutting.IoC.Context.Repository;
+using InventControl.CorssCutting.IoC.Context.Service;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventControl.CorssCutting.IoC
 {
@@ -12,8 +9,8 @@ namespace InventControl.CorssCutting.IoC
     {
         public static void ServicesRegister(this IServiceCollection services, IConfiguration configuration)
         {
-            //new ApplicationBootstraper().ChildServiceRegister(services);
-            //new DomainBootstraper().ChildServiceRegister(services);
+            services.RepositoryRegister(configuration);
+            services.ServiceRegister();
             //new RepositoryBootstrapper().ChildServiceRegister(services, configuration);
         }
     }
