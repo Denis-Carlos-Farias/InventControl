@@ -1,9 +1,9 @@
-﻿using InventControl.Domain.DTO;
+﻿using InventControl.Domain.Entities;
 
 namespace InventControl.Domain.Interfaces.Service
 {
     public interface ICategoryService
     {
-        Task Insert(CategoryDto category, CancellationToken token);
+        Task Insert(Category category, CancellationToken token);
     }
 }

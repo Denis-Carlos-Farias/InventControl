@@ -2,6 +2,7 @@
 using InventControl.CorssCutting.IoC.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InventControl.CorssCutting.IoC.Application;
 
 namespace InventControl.CorssCutting.IoC;
 
@@ -11,6 +12,6 @@ public static class RootBootstrap
     {
         services.RepositoryRegister(configuration);
         services.ServiceRegister();
-        //new RepositoryBootstrapper().ChildServiceRegister(services, configuration);
+        services.ApplicationRegister();
     }
 }

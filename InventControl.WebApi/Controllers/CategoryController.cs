@@ -1,24 +1,23 @@
-﻿using InventControl.Domain.DTO;
-using InventControl.Domain.Interfaces.Service;
+﻿using InventControl.Application.DTO;
+using InventControl.Application.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InventControl.WebApi.Controllers
+namespace InventControl.WebApi.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class CategoryController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CategoryController : ControllerBase
+    private readonly ICategoryApplication _categoryApplication;
+
+    public CategoryController(ICategoryApplication categoryApplication)
     {
-        private readonly ICategoryService _categoryService;
+        _categoryApplication = categoryApplication;
+    }
 
-        public CategoryController(ICategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
-
-        [HttpPost]
-        public async Task Insert(CategoryDto dto, CancellationToken cancellationToken)
-        {
-            await _categoryService.Insert(dto, cancellationToken).ConfigureAwait(false);
-        }
+    [HttpPost]
+    public async Task Insert(CategoryDto dto, CancellationToken cancellationToken)
+    {
+        await _categoryApplication.Insert(dto, cancellationToken).ConfigureAwait(false);
     }
 }
