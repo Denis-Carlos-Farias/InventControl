@@ -11,8 +11,25 @@ public class CategoryService : ICategoryService
     {
         _repository = repository;
     }
-    public async Task Insert(Category category, CancellationToken cancellationToken)
+    public async Task InsertAsync(Category category, CancellationToken cancellationToken)
     {
-        await _repository.Insert(category, cancellationToken).ConfigureAwait(false);
+        await _repository.InsertAsync(category, cancellationToken).ConfigureAwait(false);
     }
+    public async Task<Category> GetAsync(long Id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetAsync(Id, cancellationToken).ConfigureAwait(false);
+    }
+    public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _repository.GetAsync(cancellationToken).ConfigureAwait(false);
+    }
+    public async Task UpdateAsync(Category category, CancellationToken cancellationToken)
+    {
+        await _repository.UpdateAsync(category, cancellationToken).ConfigureAwait(false);
+    }
+    public async Task DeleteAsync(long Id, CancellationToken cancellationToken)
+    {
+        await _repository.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
+    }
+
 }
