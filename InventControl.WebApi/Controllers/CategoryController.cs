@@ -15,9 +15,33 @@ public class CategoryController : ControllerBase
         _categoryApplication = categoryApplication;
     }
 
-    [HttpPost]
-    public async Task Insert(CategoryDto dto, CancellationToken cancellationToken)
+    [HttpGet]
+    public async Task<IEnumerable<CategoryDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        await _categoryApplication.Insert(dto, cancellationToken).ConfigureAwait(false);
+        return await _categoryApplication.GetAllAsync(cancellationToken).ConfigureAwait(false);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<CategoryDto> GetAllAsync(long id, CancellationToken cancellationToken)
+    {
+        return await _categoryApplication.GetAsync(id, cancellationToken).ConfigureAwait(false);
+    }
+    
+    [HttpPost]
+    public async Task InsertAsync(CategoryDto dto, CancellationToken cancellationToken)
+    {
+        await _categoryApplication.InsertAsync(dto, cancellationToken).ConfigureAwait(false);
+    }
+
+    [HttpPut]
+    public async Task UpdateAsync(CategoryDto dto, CancellationToken cancellationToken)
+    {
+        await _categoryApplication.UpdateAsync(dto, cancellationToken).ConfigureAwait(false);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task DeleteAsync(long id, CancellationToken cancellationToken)
+    {
+        await _categoryApplication.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
     }
 }

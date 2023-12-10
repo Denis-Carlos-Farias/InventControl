@@ -15,7 +15,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
     {
         _context = context;
     }
-    public async Task<TEntity> Get(long id, CancellationToken cancellationToken)
+    public async Task<TEntity> GetAsync(long id, CancellationToken cancellationToken)
     {
         try
         {
@@ -27,19 +27,34 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
         }
 
     }
-    public async Task<IEnumerable<TEntity>> Get(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> filter = null,
+    public async Task<IEnumerable<TEntity>> GetAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> filter = null,
         Expression<Func<TEntity, object>> orderBy = null)
     {
         try
         {
-            return await _context.Set<TEntity>().AsNoTracking().Where(filter).OrderBy(orderBy).ToListAsync(cancellationToken);
+            if (filter != null && orderBy != null) {
+                return await _context.Set<TEntity>().AsNoTracking().Where(filter).OrderBy(orderBy).ToListAsync(cancellationToken);
+            }
+            else if (filter != null && orderBy == null) 
+            {
+                return await _context.Set<TEntity>().AsNoTracking().Where(filter).ToListAsync(cancellationToken);
+            }
+            else if (filter == null && orderBy != null)
+            {
+                return await _context.Set<TEntity>().AsNoTracking().OrderBy(orderBy).ToListAsync(cancellationToken);
+            }
+            else
+            {
+                return await _context.Set<TEntity>().AsNoTracking().ToListAsync(cancellationToken);
+            }
+
         }
         catch (Exception ex)
         {
             throw ex;
         }
     }
-    public async Task Insert(TEntity entity, CancellationToken cancellationToken)
+    public async Task InsertAsync(TEntity entity, CancellationToken cancellationToken)
     {
         try
         {
@@ -51,7 +66,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
             throw ex;
         }
     }
-    public async Task Update(TEntity entity, CancellationToken cancellationToken)
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         try
         {
@@ -64,11 +79,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
         }
 
     }
-    public async Task Delete(long id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(long id, CancellationToken cancellationToken)
     {
         try
         {
-            _context.Remove(id);
+            var obj = await GetAsync(id, cancellationToken).ConfigureAwait(false);
+            _context.Remove(obj);
             await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
