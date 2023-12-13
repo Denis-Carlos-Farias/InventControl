@@ -5,15 +5,8 @@ using InventControl.Domain.Interfaces.Service;
 
 namespace InventControl.Application;
 
-public class ProductApplication : IProductApplication
+public class ProductApplication(IProductService productService) : IProductApplication
 {
-    private readonly IProductService _productService;
-
-    public ProductApplication(IProductService productService)
-    {
-        _productService = productService;
-    }
-
     public async Task InsertAsync(ProductDto product, CancellationToken cancellationToken)
     {
         var obj = new Product
@@ -27,13 +20,13 @@ public class ProductApplication : IProductApplication
             Quantity = product.Quantity
         };
 
-        await _productService.InsertAsync(obj, cancellationToken).ConfigureAwait(false);
+        await productService.InsertAsync(obj, cancellationToken).ConfigureAwait(false);
 
     }
 
     public async Task<ProductDto> GetAsync(long Id, CancellationToken cancellationToken)
     {
-        var product = await _productService.GetAsync(Id, cancellationToken).ConfigureAwait(false);
+        var product = await productService.GetAsync(Id, cancellationToken).ConfigureAwait(false);
 
         var result = product != null ? new ProductDto
         {
@@ -50,7 +43,7 @@ public class ProductApplication : IProductApplication
 
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var getAll = await _productService.GetAllAsync(cancellationToken).ConfigureAwait(false);
+        var getAll = await productService.GetAllAsync(cancellationToken).ConfigureAwait(false);
         var result = new List<ProductDto>();
         foreach (var item in getAll)
         {
@@ -80,11 +73,11 @@ public class ProductApplication : IProductApplication
             Price = product.Price,
             Quantity = product.Quantity,
         };
-        await _productService.UpdateAsync(obj, cancellationToken).ConfigureAwait(false);
+        await productService.UpdateAsync(obj, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task DeleteAsync(long Id, CancellationToken cancellationToken)
     {
-        await _productService.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
+        await productService.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -6,42 +6,35 @@ namespace InventControl.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryController : ControllerBase
+public class CategoryController(ICategoryApplication categoryApplication) : ControllerBase
 {
-    private readonly ICategoryApplication _categoryApplication;
-
-    public CategoryController(ICategoryApplication categoryApplication)
-    {
-        _categoryApplication = categoryApplication;
-    }
-
     [HttpGet]
     public async Task<IEnumerable<CategoryDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _categoryApplication.GetAllAsync(cancellationToken).ConfigureAwait(false);
+        return await categoryApplication.GetAllAsync(cancellationToken).ConfigureAwait(false);
     }
     
     [HttpGet("{id}")]
     public async Task<CategoryDto> GetAllAsync(long id, CancellationToken cancellationToken)
     {
-        return await _categoryApplication.GetAsync(id, cancellationToken).ConfigureAwait(false);
+        return await categoryApplication.GetAsync(id, cancellationToken).ConfigureAwait(false);
     }
     
     [HttpPost]
     public async Task InsertAsync(CategoryDto dto, CancellationToken cancellationToken)
     {
-        await _categoryApplication.InsertAsync(dto, cancellationToken).ConfigureAwait(false);
+        await categoryApplication.InsertAsync(dto, cancellationToken).ConfigureAwait(false);
     }
 
     [HttpPut]
     public async Task UpdateAsync(CategoryDto dto, CancellationToken cancellationToken)
     {
-        await _categoryApplication.UpdateAsync(dto, cancellationToken).ConfigureAwait(false);
+        await categoryApplication.UpdateAsync(dto, cancellationToken).ConfigureAwait(false);
     }
 
     [HttpDelete("{id}")]
     public async Task DeleteAsync(long id, CancellationToken cancellationToken)
     {
-        await _categoryApplication.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
+        await categoryApplication.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -5,9 +5,6 @@ using InventControl.Infrastructure.Repositories.Base;
 
 namespace InventControl.Infrastructure.Repositories;
 
-public class CategoryRepository : Repository<Category>, ICategoryRepository
+public class CategoryRepository(InventControlContext context) : Repository<Category>(context), ICategoryRepository
 {
-    public CategoryRepository(InventControlContext context) : base(context)
-    {
-    }
 }

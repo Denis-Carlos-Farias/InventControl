@@ -5,15 +5,8 @@ using InventControl.Domain.Interfaces.Service;
 
 namespace InventControl.Application;
 
-public class CategoryApplication : ICategoryApplication
+public class CategoryApplication(ICategoryService categoryService) : ICategoryApplication
 {
-    private readonly ICategoryService _categoryService;
-
-    public CategoryApplication(ICategoryService categoryService)
-    {
-        _categoryService = categoryService;
-    }
-
     public async Task InsertAsync(CategoryDto category, CancellationToken cancellationToken)
     {
         var obj = new Category
@@ -22,13 +15,13 @@ public class CategoryApplication : ICategoryApplication
             CategoryName = category.CategoryName
         };
 
-        await _categoryService.InsertAsync(obj, cancellationToken).ConfigureAwait(false);
+        await categoryService.InsertAsync(obj, cancellationToken).ConfigureAwait(false);
 
     }
 
     public async Task<CategoryDto> GetAsync(long Id, CancellationToken cancellationToken)
     {
-        var getById = await _categoryService.GetAsync(Id, cancellationToken).ConfigureAwait(false);
+        var getById = await categoryService.GetAsync(Id, cancellationToken).ConfigureAwait(false);
 
 
         var result = getById != null ? new CategoryDto
@@ -42,7 +35,7 @@ public class CategoryApplication : ICategoryApplication
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var getAll = await _categoryService.GetAllAsync(cancellationToken).ConfigureAwait(false);
+        var getAll = await categoryService.GetAllAsync(cancellationToken).ConfigureAwait(false);
         var result = new List<CategoryDto>();
         foreach (var item in getAll)
         {
@@ -64,11 +57,11 @@ public class CategoryApplication : ICategoryApplication
             Avalible = category.Avalible,
             CategoryName = category.CategoryName
         };
-        await _categoryService.UpdateAsync(obj, cancellationToken).ConfigureAwait(false);
+        await categoryService.UpdateAsync(obj, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task DeleteAsync(long Id, CancellationToken cancellationToken)
     {
-        await _categoryService.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
+        await categoryService.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
     }
 }
