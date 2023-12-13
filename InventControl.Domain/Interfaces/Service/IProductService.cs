@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InventControl.Domain.Entities;
 
 namespace InventControl.Domain.Interfaces.Service
 {
-    internal interface IProductService
+    public interface IProductService
     {
+        Task DeleteAsync(long Id, CancellationToken cancellationToken);
+        Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken);
+        Task<Product> GetAsync(long Id, CancellationToken cancellationToken);
+        Task InsertAsync(Product product, CancellationToken cancellationToken);
+        Task UpdateAsync(Product product, CancellationToken cancellationToken);
     }
 }
